@@ -189,6 +189,10 @@ class AndroidDriver(
         }
     }
 
+    override fun uninstallApp(appId: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun installApp(appId: String, appPath: String) {
         TODO("Not yet implemented")
     }

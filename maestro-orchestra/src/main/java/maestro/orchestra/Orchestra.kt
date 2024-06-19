@@ -259,6 +259,7 @@ class Orchestra(
             is InputTextCommand -> inputTextCommand(command)
             is InputRandomCommand -> inputTextRandomCommand(command)
             is LaunchAppCommand -> launchAppCommand(command)
+            is UninstallAppCommand -> uninstallAppCommand(command)
             is InstallAppCommand -> installAppCommand(command)
             is OpenLinkCommand -> openLinkCommand(command, config)
             is PressKeyCommand -> pressKeyCommand(command)
@@ -701,6 +702,17 @@ class Orchestra(
     private fun openLinkCommand(command: OpenLinkCommand, config: MaestroConfig?): Boolean {
         maestro.openLink(command.link, config?.appId, command.autoVerify ?: false, command.browser ?: false)
 
+        return true
+    }
+
+    private fun uninstallAppCommand(command: UninstallAppCommand): Boolean {
+        try {
+            maestro.uninstallApp(
+                appId = command.appId
+            )
+        } catch (e: Exception) {
+            throw MaestroException.UnableToLaunchApp("Unable to install app ${command.appId}: ${e.message}")
+        }
         return true
     }
 

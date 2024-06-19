@@ -34,6 +34,10 @@ interface Driver {
 
     fun deviceInfo(): DeviceInfo
 
+    fun uninstallApp(
+        appId: String
+    )
+
     fun installApp(
         appId: String,
         appPath: String

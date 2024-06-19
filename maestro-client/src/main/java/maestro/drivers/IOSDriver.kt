@@ -88,6 +88,10 @@ class IOSDriver(
         }
     }
 
+    override fun uninstallApp(appId: String) {
+        iosDevice.uninstall(appId)
+    }
+
     override fun installApp(appId: String, appPath: String) {
         val inputStream: InputStream = Files.newInputStream(Path.of(appPath))
         iosDevice.install(inputStream)
@@ -497,7 +501,7 @@ class IOSDriver(
                 iosDevice.open()
                 return
             }
-            Thread.sleep(100)
+            Thread.sleep(1000)
         }
 
         throw IOSDriverTimeoutException("Maestro iOS driver did not start up in time")

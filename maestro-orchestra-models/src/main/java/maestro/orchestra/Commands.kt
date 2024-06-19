@@ -380,6 +380,18 @@ data class InputTextCommand(
     }
 }
 
+data class UninstallAppCommand(
+    val appId: String,
+) : Command {
+    override fun description(): String {
+        return "Uninstall App with appId : \"$appId\""
+    }
+
+    override fun evaluateScripts(jsEngine: JsEngine): UninstallAppCommand {
+        return this
+    }
+}
+
 data class InstallAppCommand(
     val appId: String,
     val appPath: String,

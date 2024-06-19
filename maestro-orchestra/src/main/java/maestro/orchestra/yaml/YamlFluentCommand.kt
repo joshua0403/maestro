@@ -35,6 +35,7 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.readText
 
 data class YamlFluentCommand(
+    val uninstallApp: YamlUninstallApp? = null,
     val installApp: YamlInstallApp? = null,
     val tapOn: YamlElementSelectorUnion? = null,
     val doubleTapOn: YamlElementSelectorUnion? = null,
@@ -83,6 +84,7 @@ data class YamlFluentCommand(
     @SuppressWarnings("ComplexMethod")
     fun toCommands(flowPath: Path, appId: String): List<MaestroCommand> {
         return when {
+            uninstallApp != null -> listOf(uninstallApp(uninstallApp))
             installApp != null -> listOf(installApp(installApp))
             launchApp != null -> listOf(launchApp(launchApp, appId))
             tapOn != null -> listOf(tapCommand(tapOn))
@@ -396,6 +398,14 @@ data class YamlFluentCommand(
                 condition = condition,
                 timeout = command.timeout,
                 label = command.label,
+            )
+        )
+    }
+
+    private fun uninstallApp(command: YamlUninstallApp): MaestroCommand {
+        return MaestroCommand(
+            UninstallAppCommand(
+                appId = command.appId
             )
         )
     }

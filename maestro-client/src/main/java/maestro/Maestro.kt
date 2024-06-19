@@ -60,6 +60,13 @@ class Maestro(private val driver: Driver) : AutoCloseable {
         return driver.deviceInfo()
     }
 
+    fun uninstallApp(
+        appId: String,
+    ) {
+        LOGGER.info("Uninstalling app $appId")
+        driver.uninstallApp(appId)
+    }
+
     fun installApp(
         appId: String,
         appPath: String
