@@ -60,6 +60,11 @@ class Maestro(private val driver: Driver) : AutoCloseable {
         return driver.deviceInfo()
     }
 
+    fun matchingFace() {
+        LOGGER.info("Matching face")
+        driver.matchingFace()
+    }
+
     fun uninstallApp(
         appId: String,
     ) {

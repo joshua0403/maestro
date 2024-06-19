@@ -380,6 +380,17 @@ data class InputTextCommand(
     }
 }
 
+class MatchingFaceCommand () : Command {
+    override fun description(): String {
+        return "Matching Face"
+    }
+
+    override fun evaluateScripts(jsEngine: JsEngine): Command {
+        return this
+    }
+
+}
+
 data class UninstallAppCommand(
     val appId: String,
 ) : Command {

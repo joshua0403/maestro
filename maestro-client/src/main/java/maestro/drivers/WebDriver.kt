@@ -140,6 +140,16 @@ class WebDriver(val isStudio: Boolean) : Driver {
         )
     }
 
+    override fun matchingFace() {
+        open()
+        val driver = ensureOpen()
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000))
+        val wait = WebDriverWait(driver, Duration.ofSeconds(30L))
+
+        wait.until { (it as JavascriptExecutor).executeScript("return document.readyState") == "complete" }
+    }
+
     override fun uninstallApp(appId: String) {
         open()
         val driver = ensureOpen()

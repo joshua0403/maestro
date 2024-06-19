@@ -82,6 +82,10 @@ class LocalIOSDevice(
         xcTestDevice.input(text)
     }
 
+    override fun matchingFace() {
+        simctlIOSDevice.matchingFace()
+    }
+
     override fun install(stream: InputStream) {
         simctlIOSDevice.install(stream)
     }

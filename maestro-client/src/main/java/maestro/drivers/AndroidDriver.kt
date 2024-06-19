@@ -189,6 +189,10 @@ class AndroidDriver(
         }
     }
 
+    override fun matchingFace() {
+        TODO("Not yet implemented")
+    }
+
     override fun uninstallApp(appId: String) {
         TODO("Not yet implemented")
     }

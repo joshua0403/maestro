@@ -123,6 +123,10 @@ class XCTestIOSDevice(
        }
     }
 
+    override fun matchingFace() {
+        TODO("Not yet implemented")
+    }
+
     override fun install(stream: InputStream) {
         error("Not supported")
     }

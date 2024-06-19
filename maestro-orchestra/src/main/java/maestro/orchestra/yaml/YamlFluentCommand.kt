@@ -35,6 +35,7 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.readText
 
 data class YamlFluentCommand(
+    val matchingFace: YamlMatchingFace? = null,
     val uninstallApp: YamlUninstallApp? = null,
     val installApp: YamlInstallApp? = null,
     val tapOn: YamlElementSelectorUnion? = null,
@@ -84,6 +85,7 @@ data class YamlFluentCommand(
     @SuppressWarnings("ComplexMethod")
     fun toCommands(flowPath: Path, appId: String): List<MaestroCommand> {
         return when {
+            matchingFace != null -> listOf(matchingFace(matchingFace))
             uninstallApp != null -> listOf(uninstallApp(uninstallApp))
             installApp != null -> listOf(installApp(installApp))
             launchApp != null -> listOf(launchApp(launchApp, appId))
@@ -402,6 +404,12 @@ data class YamlFluentCommand(
         )
     }
 
+    private fun matchingFace(command: YamlMatchingFace): MaestroCommand {
+        return MaestroCommand(
+            MatchingFaceCommand()
+        )
+    }
+
     private fun uninstallApp(command: YamlUninstallApp): MaestroCommand {
         return MaestroCommand(
             UninstallAppCommand(
@@ -632,6 +640,10 @@ data class YamlFluentCommand(
         @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
         fun parse(stringCommand: String): YamlFluentCommand {
             return when (stringCommand) {
+                "matchingFace" -> YamlFluentCommand(
+                    matchingFace = YamlMatchingFace()
+                )
+
                 "launchApp" -> YamlFluentCommand(
                     launchApp = YamlLaunchApp(
                         appId = null,

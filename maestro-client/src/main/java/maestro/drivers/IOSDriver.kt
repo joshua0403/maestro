@@ -88,6 +88,10 @@ class IOSDriver(
         }
     }
 
+    override fun matchingFace() {
+        iosDevice.matchingFace()
+    }
+
     override fun uninstallApp(appId: String) {
         iosDevice.uninstall(appId)
     }

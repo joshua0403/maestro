@@ -491,6 +491,20 @@ object LocalSimulatorUtils {
         }
     }
 
+    fun matchingFace(deviceId: String) {
+        runCommand(
+            listOf(
+                "xcrun",
+                "simctl",
+                "spawn",
+                deviceId,
+                "notifyutil",
+                "-p",
+                "com.apple.BiometricKit_Sim.fingerTouch.match"
+            )
+        )
+    }
+
     fun install(deviceId: String, stream: InputStream) {
         val temp = createTempDirectory()
         val extractDir = temp.toFile()

@@ -58,6 +58,10 @@ class SimctlIOSDevice(
         TODO("Not yet implemented")
     }
 
+    override fun matchingFace() {
+        LocalSimulatorUtils.matchingFace(deviceId)
+    }
+
     override fun install(stream: InputStream) {
         LocalSimulatorUtils.install(deviceId, stream)
     }

@@ -259,6 +259,7 @@ class Orchestra(
             is InputTextCommand -> inputTextCommand(command)
             is InputRandomCommand -> inputTextRandomCommand(command)
             is LaunchAppCommand -> launchAppCommand(command)
+            is MatchingFaceCommand -> matchingFaceCommand(command)
             is UninstallAppCommand -> uninstallAppCommand(command)
             is InstallAppCommand -> installAppCommand(command)
             is OpenLinkCommand -> openLinkCommand(command, config)
@@ -702,6 +703,15 @@ class Orchestra(
     private fun openLinkCommand(command: OpenLinkCommand, config: MaestroConfig?): Boolean {
         maestro.openLink(command.link, config?.appId, command.autoVerify ?: false, command.browser ?: false)
 
+        return true
+    }
+
+    private fun matchingFaceCommand(command: MatchingFaceCommand): Boolean {
+        try {
+            maestro.matchingFace()
+        } catch (e: Exception) {
+            throw MaestroException.UnableToLaunchApp("Unable to matching face: ${e.message}")
+        }
         return true
     }
 

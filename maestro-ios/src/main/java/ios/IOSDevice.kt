@@ -61,6 +61,11 @@ interface IOSDevice : AutoCloseable {
     fun install(stream: InputStream)
 
     /**
+     * iOS Simulator Matching Face
+     */
+    fun matchingFace()
+
+    /**
      * Uninstalls the app.
      *
      * Idempotent. Operation succeeds if app is not installed.

@@ -34,6 +34,8 @@ interface Driver {
 
     fun deviceInfo(): DeviceInfo
 
+    fun matchingFace()
+
     fun uninstallApp(
         appId: String
     )

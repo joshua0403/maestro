@@ -38,6 +38,7 @@ data class MaestroCommand(
     val assertConditionCommand: AssertConditionCommand? = null,
     val inputTextCommand: InputTextCommand? = null,
     val inputRandomTextCommand: InputRandomCommand? = null,
+    val matchingFaceCommand: MatchingFaceCommand? = null,
     val uninstallAppCommand: UninstallAppCommand? = null,
     val installAppCommand: InstallAppCommand? = null,
     val launchAppCommand: LaunchAppCommand? = null,
@@ -80,6 +81,7 @@ data class MaestroCommand(
         assertConditionCommand = command as? AssertConditionCommand,
         inputTextCommand = command as? InputTextCommand,
         inputRandomTextCommand = command as? InputRandomCommand,
+        matchingFaceCommand = command as? MatchingFaceCommand,
         uninstallAppCommand = command as? UninstallAppCommand,
         installAppCommand = command as? InstallAppCommand,
         launchAppCommand = command as? LaunchAppCommand,
@@ -122,6 +124,7 @@ data class MaestroCommand(
         assertConditionCommand != null -> assertConditionCommand
         inputTextCommand != null -> inputTextCommand
         inputRandomTextCommand != null -> inputRandomTextCommand
+        matchingFaceCommand != null -> matchingFaceCommand
         uninstallAppCommand != null -> uninstallAppCommand
         installAppCommand != null -> installAppCommand
         launchAppCommand != null -> launchAppCommand
