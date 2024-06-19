@@ -82,6 +82,10 @@ class LocalIOSDevice(
         xcTestDevice.input(text)
     }
 
+    override fun updateState(appId: String, containerPath: String) {
+        simctlIOSDevice.updateState(appId, containerPath)
+    }
+
     override fun matchingFace() {
         simctlIOSDevice.matchingFace()
     }

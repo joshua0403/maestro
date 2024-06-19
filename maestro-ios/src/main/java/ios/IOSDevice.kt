@@ -61,6 +61,11 @@ interface IOSDevice : AutoCloseable {
     fun install(stream: InputStream)
 
     /**
+     * iOS Simulator update state
+     */
+    fun updateState(appId: String, containerPath: String)
+
+    /**
      * iOS Simulator Matching Face
      */
     fun matchingFace()

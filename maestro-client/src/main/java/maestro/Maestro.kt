@@ -60,6 +60,14 @@ class Maestro(private val driver: Driver) : AutoCloseable {
         return driver.deviceInfo()
     }
 
+    fun updateState(
+        appId: String,
+        containerPath: String
+    ) {
+        LOGGER.info("Updateing state $appId $containerPath")
+        driver.updateState(appId, containerPath)
+    }
+
     fun matchingFace() {
         LOGGER.info("Matching face")
         driver.matchingFace()

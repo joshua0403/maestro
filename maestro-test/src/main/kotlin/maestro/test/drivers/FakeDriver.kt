@@ -81,6 +81,22 @@ class FakeDriver : Driver {
         )
     }
 
+    override fun updateState(appId: String, containerPath: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun matchingFace() {
+        TODO("Not yet implemented")
+    }
+
+    override fun uninstallApp(appId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun installApp(appId: String, appPath: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun launchApp(
         appId: String,
         launchArguments: Map<String, Any>,

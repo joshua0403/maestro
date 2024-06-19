@@ -259,6 +259,7 @@ class Orchestra(
             is InputTextCommand -> inputTextCommand(command)
             is InputRandomCommand -> inputTextRandomCommand(command)
             is LaunchAppCommand -> launchAppCommand(command)
+            is UpdateStateCommand -> updateStateCommand(command)
             is MatchingFaceCommand -> matchingFaceCommand(command)
             is UninstallAppCommand -> uninstallAppCommand(command)
             is InstallAppCommand -> installAppCommand(command)
@@ -703,6 +704,18 @@ class Orchestra(
     private fun openLinkCommand(command: OpenLinkCommand, config: MaestroConfig?): Boolean {
         maestro.openLink(command.link, config?.appId, command.autoVerify ?: false, command.browser ?: false)
 
+        return true
+    }
+
+    private fun updateStateCommand(command: UpdateStateCommand): Boolean {
+        try {
+            maestro.updateState(
+                appId = command.appId,
+                containerPath = command.containerPath
+            )
+        } catch (e: Exception) {
+            throw MaestroException.UnableToLaunchApp("Unable to update state: ${e.message}")
+        }
         return true
     }
 

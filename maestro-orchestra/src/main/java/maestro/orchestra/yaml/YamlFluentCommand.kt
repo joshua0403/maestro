@@ -28,6 +28,7 @@ import maestro.orchestra.error.InvalidFlowFile
 import maestro.orchestra.error.MediaFileNotFound
 import maestro.orchestra.error.SyntaxError
 import maestro.orchestra.util.Env.withEnv
+import org.yaml.snakeyaml.Yaml
 import java.nio.file.Path
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.exists
@@ -35,6 +36,7 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.readText
 
 data class YamlFluentCommand(
+    val updateState: YamlUpdateState? = null,
     val matchingFace: YamlMatchingFace? = null,
     val uninstallApp: YamlUninstallApp? = null,
     val installApp: YamlInstallApp? = null,
@@ -85,6 +87,7 @@ data class YamlFluentCommand(
     @SuppressWarnings("ComplexMethod")
     fun toCommands(flowPath: Path, appId: String): List<MaestroCommand> {
         return when {
+            updateState != null -> listOf(updateState(updateState))
             matchingFace != null -> listOf(matchingFace(matchingFace))
             uninstallApp != null -> listOf(uninstallApp(uninstallApp))
             installApp != null -> listOf(installApp(installApp))
@@ -400,6 +403,15 @@ data class YamlFluentCommand(
                 condition = condition,
                 timeout = command.timeout,
                 label = command.label,
+            )
+        )
+    }
+
+    private fun updateState(command: YamlUpdateState): MaestroCommand {
+        return MaestroCommand(
+            UpdateStateCommand(
+                appId = command.appId,
+                containerPath = command.containerPath
             )
         )
     }

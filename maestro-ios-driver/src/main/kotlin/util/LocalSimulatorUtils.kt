@@ -3,12 +3,19 @@ package util
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import maestro.utils.MaestroTimer
+import okio.buffer
+import okio.source
 import org.rauschig.jarchivelib.ArchiveFormat
 import org.rauschig.jarchivelib.ArchiverFactory
 import util.CommandLineUtils.runCommand
+import java.io.BufferedReader
 import java.io.File
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.lang.ProcessBuilder.Redirect.PIPE
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.Path
 import kotlin.io.path.createTempDirectory
 
 object LocalSimulatorUtils {
@@ -489,6 +496,61 @@ object LocalSimulatorUtils {
             "location" -> "never"
             else -> "NO"
         }
+    }
+
+    fun updateState(deviceId: String, appId: String, containerPath: String) {
+        val temp = createTempDirectory()
+        val tempDeviceContainerPathFile = File.createTempFile("deviceAppContainerPath_", null)
+        val tempOutputFile = File.createTempFile("output_", null)
+        val extractDir = temp.toFile()
+        val stream: InputStream = Files.newInputStream(Path(containerPath))
+
+        ArchiverFactory
+            .createArchiver(ArchiveFormat.ZIP)
+            .extract(stream, extractDir)
+
+        runCommand(
+            listOf(
+                "xcrun",
+                "simctl",
+                "get_app_container",
+                deviceId,
+                appId,
+                "data"
+            ),
+            outputFile = tempDeviceContainerPathFile
+        )
+
+        try {
+            val deviceAppContainerPath = tempDeviceContainerPathFile.readText().trim()
+            val overrideFolder = arrayOf("Documents", "Library")
+            for (folder in overrideFolder) {
+                runCommand(
+                    listOf(
+                        "/bin/bash",
+                        "-c",
+                        "cd $deviceAppContainerPath && mv ./$folder ./${folder+"_bak"}"
+                    ),
+                    outputFile = tempOutputFile
+                )
+
+                runCommand(
+                    listOf(
+                        "cp",
+                        "-R",
+                        extractDir.path + "/backup/" + folder,
+                        deviceAppContainerPath
+                    ),
+                    outputFile = tempOutputFile
+                )
+            }
+        } catch (e: Exception) {
+            val message = e.localizedMessage
+            return
+        }
+
+        val output = tempOutputFile.readLines()
+        return
     }
 
     fun matchingFace(deviceId: String) {

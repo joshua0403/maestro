@@ -16,6 +16,7 @@ import java.io.InputStream
 import java.nio.channels.Channels
 import java.nio.file.Files
 import java.util.UUID
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Local
 
 class SimctlIOSDevice(
     override val deviceId: String,
@@ -56,6 +57,10 @@ class SimctlIOSDevice(
 
     override fun input(text: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun updateState(appId: String, containerPath: String) {
+        LocalSimulatorUtils.updateState(deviceId, appId, containerPath)
     }
 
     override fun matchingFace() {

@@ -40,6 +40,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.util.UUID
 import kotlin.collections.set
+import kotlin.io.path.Path
 
 
 class IOSDriver(
@@ -88,6 +89,10 @@ class IOSDriver(
         }
     }
 
+    override fun updateState(appId: String, containerPath: String) {
+        iosDevice.updateState(appId, containerPath)
+    }
+
     override fun matchingFace() {
         iosDevice.matchingFace()
     }
@@ -97,7 +102,7 @@ class IOSDriver(
     }
 
     override fun installApp(appId: String, appPath: String) {
-        val inputStream: InputStream = Files.newInputStream(Path.of(appPath))
+        val inputStream: InputStream = Files.newInputStream(Path(appPath))
         iosDevice.install(inputStream)
     }
 

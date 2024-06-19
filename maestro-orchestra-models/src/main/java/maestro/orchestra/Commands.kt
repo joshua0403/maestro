@@ -380,6 +380,20 @@ data class InputTextCommand(
     }
 }
 
+data class UpdateStateCommand (
+    val appId: String,
+    val containerPath: String
+) : Command {
+    override fun description(): String {
+        return "Update state $appId $containerPath"
+    }
+
+    override fun evaluateScripts(jsEngine: JsEngine): Command {
+        return this
+    }
+
+}
+
 class MatchingFaceCommand () : Command {
     override fun description(): String {
         return "Matching Face"
