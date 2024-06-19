@@ -35,8 +35,12 @@ import okio.source
 import org.slf4j.LoggerFactory
 import util.XCRunnerCLIUtils
 import java.io.File
+import java.io.InputStream
+import java.nio.file.Files
+import java.nio.file.Path
 import java.util.UUID
 import kotlin.collections.set
+
 
 class IOSDriver(
     private val iosDevice: IOSDevice,
@@ -82,6 +86,11 @@ class IOSDriver(
                 heightGrid = deviceInfo.heightPoints,
             )
         }
+    }
+
+    override fun installApp(appId: String, appPath: String) {
+        val inputStream: InputStream = Files.newInputStream(Path.of(appPath))
+        iosDevice.install(inputStream)
     }
 
     override fun launchApp(

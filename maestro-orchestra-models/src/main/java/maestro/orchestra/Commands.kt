@@ -380,6 +380,19 @@ data class InputTextCommand(
     }
 }
 
+data class InstallAppCommand(
+    val appId: String,
+    val appPath: String,
+) : Command {
+    override fun description(): String {
+        return "Install App with appId : \"$appId\", appPath: \"$appPath\""
+    }
+
+    override fun evaluateScripts(jsEngine: JsEngine): InstallAppCommand {
+        return this
+    }
+}
+
 data class LaunchAppCommand(
     val appId: String,
     val clearState: Boolean? = null,

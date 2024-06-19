@@ -189,6 +189,10 @@ class AndroidDriver(
         }
     }
 
+    override fun installApp(appId: String, appPath: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun launchApp(
         appId: String,
         launchArguments: Map<String, Any>,

@@ -19,6 +19,7 @@
 
 package maestro
 
+import okio.Path
 import okio.Sink
 import java.io.File
 import java.util.UUID
@@ -32,6 +33,11 @@ interface Driver {
     fun close()
 
     fun deviceInfo(): DeviceInfo
+
+    fun installApp(
+        appId: String,
+        appPath: String
+    )
 
     fun launchApp(
         appId: String,

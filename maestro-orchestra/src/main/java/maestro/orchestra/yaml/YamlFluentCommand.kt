@@ -35,6 +35,7 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.readText
 
 data class YamlFluentCommand(
+    val installApp: YamlInstallApp? = null,
     val tapOn: YamlElementSelectorUnion? = null,
     val doubleTapOn: YamlElementSelectorUnion? = null,
     val longPressOn: YamlElementSelectorUnion? = null,
@@ -82,6 +83,7 @@ data class YamlFluentCommand(
     @SuppressWarnings("ComplexMethod")
     fun toCommands(flowPath: Path, appId: String): List<MaestroCommand> {
         return when {
+            installApp != null -> listOf(installApp(installApp))
             launchApp != null -> listOf(launchApp(launchApp, appId))
             tapOn != null -> listOf(tapCommand(tapOn))
             longPressOn != null -> listOf(tapCommand(longPressOn, longPress = true))
@@ -394,6 +396,15 @@ data class YamlFluentCommand(
                 condition = condition,
                 timeout = command.timeout,
                 label = command.label,
+            )
+        )
+    }
+
+    private fun installApp(command: YamlInstallApp): MaestroCommand {
+        return MaestroCommand(
+            InstallAppCommand(
+                appId = command.appId,
+                appPath = command.appPath
             )
         )
     }
