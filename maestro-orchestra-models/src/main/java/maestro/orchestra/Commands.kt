@@ -389,7 +389,10 @@ data class UpdateStateCommand (
     }
 
     override fun evaluateScripts(jsEngine: JsEngine): Command {
-        return this
+        return copy(
+            appId = appId.evaluateScripts(jsEngine) ,
+            containerPath = containerPath.evaluateScripts(jsEngine)
+        )
     }
 
 }
@@ -413,7 +416,9 @@ data class UninstallAppCommand(
     }
 
     override fun evaluateScripts(jsEngine: JsEngine): UninstallAppCommand {
-        return this
+        return copy(
+            appId = appId.evaluateScripts(jsEngine)
+        )
     }
 }
 
@@ -426,7 +431,10 @@ data class InstallAppCommand(
     }
 
     override fun evaluateScripts(jsEngine: JsEngine): InstallAppCommand {
-        return this
+        return copy(
+            appId = appId.evaluateScripts(jsEngine),
+            appPath = appPath.evaluateScripts(jsEngine)
+        )
     }
 }
 
