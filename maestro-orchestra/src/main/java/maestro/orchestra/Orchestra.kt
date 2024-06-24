@@ -714,7 +714,7 @@ class Orchestra(
                 containerPath = command.containerPath
             )
         } catch (e: Exception) {
-            throw MaestroException.UnableToLaunchApp("Unable to update state: ${e.message}")
+            throw MaestroException.UnableToLaunchApp("Unable to update state: $e")
         }
         return true
     }
@@ -723,7 +723,7 @@ class Orchestra(
         try {
             maestro.matchingFace()
         } catch (e: Exception) {
-            throw MaestroException.UnableToLaunchApp("Unable to matching face: ${e.message}")
+            throw MaestroException.UnableToLaunchApp("Unable to matching face: $e")
         }
         return true
     }
@@ -734,7 +734,7 @@ class Orchestra(
                 appId = command.appId
             )
         } catch (e: Exception) {
-            throw MaestroException.UnableToLaunchApp("Unable to install app ${command.appId}: ${e.message}")
+            throw MaestroException.UnableToLaunchApp("Unable to install app ${command.appId}: $e")
         }
         return true
     }
@@ -746,7 +746,7 @@ class Orchestra(
                 appPath = command.appPath
             )
         } catch (e: Exception) {
-            throw MaestroException.UnableToLaunchApp("Unable to install app ${command.appId}: ${e.message}")
+            throw MaestroException.UnableToLaunchApp("Unable to install app ${command.appId}: $e")
         }
         return true
     }
