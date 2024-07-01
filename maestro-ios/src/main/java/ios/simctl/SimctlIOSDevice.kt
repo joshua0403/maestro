@@ -67,8 +67,8 @@ class SimctlIOSDevice(
         LocalSimulatorUtils.matchingFace(deviceId)
     }
 
-    override fun install(stream: InputStream) {
-        LocalSimulatorUtils.install(deviceId, stream)
+    override fun install(path: String) {
+        LocalSimulatorUtils.install(deviceId, path)
     }
 
     override fun uninstall(id: String): Result<Unit, Throwable> {

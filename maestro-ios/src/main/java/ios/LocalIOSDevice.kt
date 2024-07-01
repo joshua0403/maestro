@@ -90,8 +90,8 @@ class LocalIOSDevice(
         simctlIOSDevice.matchingFace()
     }
 
-    override fun install(stream: InputStream) {
-        simctlIOSDevice.install(stream)
+    override fun install(path: String) {
+        simctlIOSDevice.install(path)
     }
 
     override fun uninstall(id: String): Result<Unit, Throwable> {

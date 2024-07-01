@@ -79,7 +79,7 @@ tasks.named("classes") {
 }
 
 tasks.named<Zip>("distZip") {
-    archiveFileName.set("maestro.zip")
+    archiveFileName.set("maestro-$CLI_VERSION.zip")
 }
 
 tasks.named<Tar>("distTar") {

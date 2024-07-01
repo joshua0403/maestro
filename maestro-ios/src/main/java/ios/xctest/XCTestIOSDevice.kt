@@ -131,7 +131,7 @@ class XCTestIOSDevice(
         TODO("Not yet implemented")
     }
 
-    override fun install(stream: InputStream) {
+    override fun install(path: String) {
         error("Not supported")
     }
 

@@ -58,7 +58,7 @@ interface IOSDevice : AutoCloseable {
      *
      * @param stream - input stream of zipped .app bundle
      */
-    fun install(stream: InputStream)
+    fun install(path: String)
 
     /**
      * iOS Simulator update state

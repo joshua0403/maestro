@@ -3,20 +3,18 @@ package util
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import maestro.utils.MaestroTimer
-import okio.buffer
-import okio.source
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream
+import org.apache.commons.io.input.CloseShieldInputStream
 import org.rauschig.jarchivelib.ArchiveFormat
 import org.rauschig.jarchivelib.ArchiverFactory
 import util.CommandLineUtils.runCommand
-import java.io.BufferedReader
 import java.io.File
 import java.io.InputStream
-import java.io.InputStreamReader
 import java.lang.ProcessBuilder.Redirect.PIPE
 import java.nio.file.Files
-import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.createTempDirectory
+
 
 object LocalSimulatorUtils {
 
@@ -567,13 +565,13 @@ object LocalSimulatorUtils {
         )
     }
 
-    fun install(deviceId: String, stream: InputStream) {
+    fun install(deviceId: String, path: String) {
         val temp = createTempDirectory()
         val extractDir = temp.toFile()
 
         ArchiverFactory
             .createArchiver(ArchiveFormat.ZIP)
-            .extract(stream, extractDir)
+            .extract(File(path), extractDir)
 
         val app = extractDir.walk()
             .filter { it.name.endsWith(".app") }

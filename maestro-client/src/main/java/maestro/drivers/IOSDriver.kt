@@ -102,8 +102,7 @@ class IOSDriver(
     }
 
     override fun installApp(appId: String, appPath: String) {
-        val inputStream: InputStream = Files.newInputStream(Path(appPath))
-        iosDevice.install(inputStream)
+        iosDevice.install(appPath)
     }
 
     override fun launchApp(
