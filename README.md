@@ -21,7 +21,7 @@ Maestro is the easiest way to automate UI testing for your mobile app.
 ```
 3. Add command MatchingFace
 ```
-MatchingFace
+- MatchingFace
 ```
 4. Add command UpdateState
 ```
