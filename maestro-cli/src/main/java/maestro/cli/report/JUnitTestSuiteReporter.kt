@@ -14,6 +14,8 @@ import maestro.cli.model.FlowStatus
 import maestro.cli.model.TestExecutionSummary
 import okio.Sink
 import okio.buffer
+import java.time.LocalDateTime
+import java.util.Date
 
 class JUnitTestSuiteReporter(
     private val mapper: ObjectMapper,
@@ -35,8 +37,10 @@ class JUnitTestSuiteReporter(
                             TestSuite(
                                 name = testSuiteName ?: "Test Suite",
                                 device = suite.deviceName,
+                                hostname = suite.deviceName,
                                 failures = suite.flows.count { it.status == FlowStatus.ERROR },
                                 time = suite.duration?.inWholeSeconds?.toString(),
+                                timestamp = LocalDateTime.now().toString(),
                                 tests = suite.flows.size,
                                 testCases = suite.flows
                                     .map { flow ->
@@ -70,9 +74,11 @@ class JUnitTestSuiteReporter(
     private data class TestSuite(
         @JacksonXmlProperty(isAttribute = true) val name: String,
         @JacksonXmlProperty(isAttribute = true) val device: String?,
+        @JacksonXmlProperty(isAttribute = true) val hostname: String?,
         @JacksonXmlProperty(isAttribute = true) val tests: Int,
         @JacksonXmlProperty(isAttribute = true) val failures: Int,
         @JacksonXmlProperty(isAttribute = true) val time: String? = null,
+        @JacksonXmlProperty(isAttribute = true) val timestamp: String? = null,
         @JacksonXmlElementWrapper(useWrapping = false)
         @JsonProperty("testcase")
         val testCases: List<TestCase>,
@@ -84,6 +90,7 @@ class JUnitTestSuiteReporter(
         @JacksonXmlProperty(isAttribute = true) val classname: String,
         @JacksonXmlProperty(isAttribute = true) val time: String? = null,
         @JacksonXmlProperty(isAttribute = true) val status: FlowStatus,
+        @JacksonXmlProperty(isAttribute = true) val thread: String = "thread-main",
         val failure: Failure? = null,
     )
 
