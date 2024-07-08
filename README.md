@@ -8,6 +8,34 @@ Maestro is the easiest way to automate UI testing for your mobile app.
 
 <img src="https://user-images.githubusercontent.com/847683/187275009-ddbdf963-ce1d-4e07-ac08-b10f145e8894.gif" />
 
+## Enhance
+1. Add command InstallApp
+```
+- installApp: 
+    appId: ${APP_ID}
+    appPath: ${APP_FILE} // compress app file to zip file
+```
+2. Add command UnstallApp
+```
+- uninstallApp: ${APP_ID}
+```
+3. Add command MatchingFace
+```
+MatchingFace
+```
+4. Add command UpdateState
+```
+- updateState:
+    appId: ${APP_ID}
+    containerPath: ${STATE_ZIP}
+
+// STATE_ZIP folder structure
+backup
+  ∟ Documents
+  ∟ Library
+  ∟ SystemData
+  ∟ tmp
+```
 
 ## Why Maestro?
 
