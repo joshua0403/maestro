@@ -722,6 +722,20 @@ data class RunFlowCommand(
         )
     }
 
+    fun fillCommandLayer() {
+        updateCommandLayer(1)
+    }
+
+    private fun updateCommandLayer(layer: Int) {
+        commands.forEach {
+            it.commandLayer = layer
+
+            if (it.runFlowCommand != null) {
+                it.runFlowCommand.updateCommandLayer(layer + 1)
+            }
+        }
+    }
+
 }
 
 data class SetLocationCommand(

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import maestro.cli.model.FlowStatus
 import maestro.cli.model.TestExecutionSummary
+import maestro.cli.runner.CommandStatus
 import okio.Sink
 import okio.buffer
 import java.time.LocalDateTime
@@ -44,6 +45,10 @@ class JUnitTestSuiteReporter(
                                 tests = suite.flows.size,
                                 testCases = suite.flows
                                     .map { flow ->
+                                        flow.debugMetadata?.commands?.entries?.toList()?.
+                                            filter { it.key.runFlowCommand != null }?.
+                                            forEach { it.key.runFlowCommand?.fillCommandLayer() }
+
                                         TestCase(
                                             id = flow.name,
                                             name = flow.name,
@@ -53,6 +58,24 @@ class JUnitTestSuiteReporter(
                                                     message = failure.message,
                                                 )
                                             },
+                                            systemOut = flow.debugMetadata?.commands?.entries?.toList()?.
+                                                sortedWith(compareBy { it.value.timestamp })?.
+                                                filter { it.value.status != CommandStatus.PENDING && it.value.status != CommandStatus.RUNNING }?.
+                                                filter { it.key.description() != "Apply configuration" && it.key.description() != "Define variables" }?.
+                                                map {
+                                                    var prefix = ""
+                                                    if (it.key.commandLayer == 0) {
+                                                        when (it.value.status) {
+                                                            CommandStatus.COMPLETED -> prefix = "✅ "
+                                                            CommandStatus.PENDING, CommandStatus.RUNNING -> prefix = ""
+                                                            CommandStatus.FAILED -> prefix = "❌ "
+                                                            CommandStatus.SKIPPED -> prefix = "☑️ "
+                                                            null -> prefix = ""
+                                                        }
+                                                    }
+                                                    prefix + "→ ".repeat(it.key.commandLayer) + it.key.description() + " " + it.value.status.toString()
+                                                }?.
+                                                reduce { result, element -> result + "\n" + element },
                                             time = flow.duration?.inWholeSeconds?.toString(),
                                             status = flow.status
                                         )
@@ -92,6 +115,7 @@ class JUnitTestSuiteReporter(
         @JacksonXmlProperty(isAttribute = true) val status: FlowStatus,
         @JacksonXmlProperty(isAttribute = true) val thread: String = "thread-main",
         val failure: Failure? = null,
+        @JacksonXmlProperty(localName = "system-out") val systemOut: String? = null,
     )
 
     private data class Failure(

@@ -242,6 +242,7 @@ class TestSuiteInteractor(
                 )
             } else null,
             duration = flowDuration,
+            debugMetadata = debug,
         )
     }
 

@@ -69,6 +69,8 @@ data class MaestroCommand(
     val addMediaCommand: AddMediaCommand? = null,
     val setAirplaneModeCommand: SetAirplaneModeCommand? = null,
     val toggleAirplaneModeCommand: ToggleAirplaneModeCommand? = null,
+
+    var commandLayer: Int = 0,
 ) {
 
     constructor(command: Command) : this(

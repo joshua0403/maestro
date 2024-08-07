@@ -1,5 +1,6 @@
 package maestro.cli.model
 
+import maestro.cli.report.FlowDebugMetadata
 import kotlin.time.Duration
 
 data class TestExecutionSummary(
@@ -22,6 +23,7 @@ data class TestExecutionSummary(
         val status: FlowStatus,
         val failure: Failure? = null,
         val duration: Duration? = null,
+        val debugMetadata: FlowDebugMetadata? = null,
     )
 
     data class Failure(
